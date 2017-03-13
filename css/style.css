@@ -82,7 +82,6 @@ body{
 
 .content_wrapper{
     width: 1000px;
-    height: 800px;
     margin: auto;
     background: pink;
 
@@ -128,7 +127,6 @@ body{
 
 #content_area{
     width: 800px;
-    height: 800px;
     float: right;
     background: pink;
 }
@@ -138,6 +136,39 @@ body{
     height: 800px;
     background: black;
     float:left;
+}
+
+#sidebar_title{
+    background-color: white;
+    color: black;
+    font-size: 22px;
+    font-family: arial;
+    padding: 10px;
+    text-align: center;
+}
+
+#categories{
+    text-align: center;
+}
+
+#categories li{
+    list-style: none;
+    margin: 10px;
+    padding: 3px;
+}
+
+#categories a{
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-family: COMIC SANS MS;
+    text-decoration: none;
+}
+
+#categories a:hover{
+    color:blue;
+    font-weight: bolder;
+    text-decoration: underline;
 }
 
 #footer{

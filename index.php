@@ -1,8 +1,12 @@
 <!DOCTYPE>
+<?php
+include ("functions/functions.php");
+?>
 <html>
     <head>
         <title> My Online Store</title>
         <link rel="stylesheet" href="css/style.css" media="all"/>
+        
     </head>
     
 <body>
@@ -41,13 +45,23 @@
             <div id="sidebar">
                 
                 <div id="sidebar_title">Categories </div>
-            
+                <ul id="categories">
+                    <?php getCategories();?>
+                </ul>
+                
+                <div id="sidebar_title">Brands </div>
+                <ul id="categories">
+                    <?php getBrands();?>
+                </ul>
+                
             </div>
             <div id="content_area">This is the content area!</div>
         </div>
         <!--Content ends here-->
         <!--Footer starts here-->
-        <div id="footer">This is the footer!</div>
+        <div id="footer">
+            <h2 style="text-align:center; padding-top:30px;">&copy; 2017 by Alejandro Vargas</h2>
+        </div>
         <!--Footer ends here-->
     </div>
 
