@@ -55,7 +55,12 @@ include ("functions/functions.php");
                 </ul>
                 
             </div>
-            <div id="content_area">This is the content area!</div>
+            <div id="content_area">This is the content area!
+                <div id="products_box">
+                    <?php getPro();?>
+                </div>
+                
+            </div>
         </div>
         <!--Content ends here-->
         <!--Footer starts here-->

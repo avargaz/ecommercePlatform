@@ -10,7 +10,7 @@ include ("../functions/functions.php");
     </head>
     <body bgcolor="skyblue">
     
-        <form action="insert_product.php" method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             <table align="center" width="750" border="2" bgcolor="gray">
                 <tr align="center">
                     <td colspan="8"><h2>Insert new post here</h2></td>
@@ -78,9 +78,18 @@ include ("../functions/functions.php");
         //getting the image
         $product_image = $_FILES['product_image']['name'];
         $product_image_tmp = $_FILES['product_image']['tmp_name'];
+        //move temp photo to folder
+        move_uploaded_file($product_image_tmp, "../img/product-images/$product_image");
         
-        echo $insert_product = "INSERT INTO Products (product_cat, product_brand, product_title, product_price, product_desc, product_image, product_keywords) VALUES ('$product_cat', '$product_brand', '$product_title', '$product_price', '$product_desc', '$product_image', '$product_keywords')";
+        $insert_product = "INSERT INTO Products (product_cat,   product_brand, product_title, product_price, product_desc, product_image, product_keywords) VALUES ('$product_cat', '$product_brand', '$product_title', '$product_price', '$product_desc', '$product_image', '$product_keywords')";
         //echo $insert_product;
+        $insert_pro = mysqli_query($conn, $insert_product);
+        
+        if($insert_pro){
+            echo "<script>alert('Product has been inserted')</script>";
+            echo "<script>window.open('insert_product.php',_self')</script>";
+        }else
+            echo "error";
     }
 
 
