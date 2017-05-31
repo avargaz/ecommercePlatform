@@ -56,13 +56,16 @@ include ("functions/functions.php");
                 
             </div>
             <div id="content_area">
+                <?php cart(); ?>
                 <div id="shopping_cart">
                     <span style="float:right">
                         Welcome Guest!
                     <b style="color:yellow">Shopping Cart - </b>
-                    Total Items: Total Price:
+                    Total Items: <?php getTotalItems(); ?> Total Price: 
+                        <?php getTotalPrice(); ?>
                     <a href="cart.php"> Go to Cart</a></span> 
                 </div>
+                <?php echo getUserIP();  ?>
                 <div id="products_box">
                     <?php getPro();?>
                     <?php getCatPro();?>

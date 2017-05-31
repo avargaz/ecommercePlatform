@@ -82,7 +82,7 @@ function getCatPro(){
                     <img src='img/product-images/$pro_image' width='180' height='180' />
                     <p><b> $ $pro_price</b></p>
                     <a href='details.php?pro_id=$pro_id' style='float:left'>Details</a>
-                    <a href='index.php?pro_id=$pro_id' ><button style='float:right'</button>Add to Cart</a>
+                    <a href='index.php?add_cart=$pro_id' ><button style='float:right'</button>Add to Cart</a>
                 </div>";
 
             }
@@ -115,7 +115,7 @@ function getBrandPro(){
                     <img src='img/product-images/$pro_image' width='180' height='180' />
                     <p><b> $ $pro_price</b></p>
                     <a href='details.php?pro_id=$pro_id' style='float:left'>Details</a>
-                    <a href='index.php?pro_id=$pro_id' ><button style='float:right'</button>Add to Cart</a>
+                    <a href='index.php?add_cart=$pro_id' ><button style='float:right'</button>Add to Cart</a>
                 </div>";
 
             }
@@ -143,7 +143,7 @@ function getPro(){
                     <img src='img/product-images/$pro_image' width='180' height='180' />
                     <p><b> $ $pro_price</b></p>
                     <a href='details.php?pro_id=$pro_id' style='float:left'>Details</a>
-                    <a href='index.php?pro_id=$pro_id' ><button style='float:right'</button>Add to Cart</a>
+                    <a href='index.php?add_cart=$pro_id' ><button style='float:right'</button>Add to Cart</a>
                 </div>";
 
             }
@@ -176,7 +176,7 @@ function getDetailsPage(){
                 <h3>$pro_desc</h3>
                 <p><b> $ $pro_price</b></p>
                 <a href='index.php' style='float:left'>Go Back</a>
-                <a href='index.php?pro_id=$pro_id' ><button style='float:right'</button>Add to Cart</a>
+                <a href='index.php?add_cart=$pro_id' ><button style='float:right'</button>Add to Cart</a>
             </div>";
 
         }
@@ -186,7 +186,65 @@ function getDetailsPage(){
     }
 }
 
+//getting the user IP address for shopping cart updating
+function getUserIP()
+{
+    $client  = @$_SERVER['HTTP_CLIENT_IP'];
+    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+    $remote  = $_SERVER['REMOTE_ADDR'];
 
+    if(filter_var($client, FILTER_VALIDATE_IP))
+    {
+        $ip = $client;
+    }
+    elseif(filter_var($forward, FILTER_VALIDATE_IP))
+    {
+        $ip = $forward;
+    }
+    else
+    {
+        $ip = $remote;
+    }
+
+    return $ip;
+}
+
+//creating an item in the car or incrementing quantity by 1
+function cart(){
+    if(isset($_GET['add_cart'])){
+        global $conn;
+        $user_ip = getUserIP();
+        $pro_id = $_GET['add_cart'];
+        $check_pro = "SELECT * FROM Cart WHERE ip_add = '$user_ip' AND p_id = '$pro_id'";
+        $run_check = mysqli_query($conn,$check_pro);
+        $countProd = mysqli_num_rows($run_check);
+        if($countProd > 0){
+            $insert = "UPDATE cart SET qty = qty + 1 WHERE p_id = '$pro_id' AND ip_add = '$user_ip';";
+            $run_pro = mysqli_query($conn, $insert);
+            echo "<script>window.open('index.php','_self') </script>";
+            
+        }else{
+            $insert = "INSERT INTO cart (p_id, ip_add,qty) VALUES ('$pro_id','$user_ip');";
+            $run_pro = mysqli_query($conn, $insert,1);
+            echo "<script>window.open('index.php','_self') </script>";
+        }
+    }
+}
+
+function getTotalItems(){
+    global $conn;
+    $ip = getUserIP();
+    //$get_items = "SELECT * FROM CART WHERE ip_add = '$ip'";
+    $get_items = "SELECT SUM(qty) FROM cart WHERE ip_add = '$ip'";
+    $run_items = mysqli_query($conn,$get_items);
+    $row = $run_items->fetch_row();
+    echo $row[0];
+}
+
+function getTotalPrice(){
+    global $conn;
+    
+}
 
 
 
