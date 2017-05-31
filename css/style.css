@@ -84,7 +84,6 @@ body{
     width: 1000px;
     margin: auto;
     background: pink;
-
 }
 
 .menubar{
@@ -195,7 +194,12 @@ body{
     border:2px solid black;
 }
 
-
+#shopping_cart{
+    width: 800px;
+    height: 50px;
+    background: black;
+    color:white;
+}
 
 
 

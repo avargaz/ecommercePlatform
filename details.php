@@ -64,9 +64,7 @@ include ("functions/functions.php");
                     <a href="cart.php"> Go to Cart</a></span> 
                 </div>
                 <div id="products_box">
-                    <?php getPro();?>
-                    <?php getCatPro();?>
-                    <?php getBrandPro();?>
+                    <?php getDetailsPage();?>
                 </div>
                 
             </div>
@@ -80,5 +78,7 @@ include ("functions/functions.php");
     </div>
 
 </body>
+
+
 
 </html>
