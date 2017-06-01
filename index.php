@@ -61,11 +61,10 @@ include ("functions/functions.php");
                     <span style="float:right">
                         Welcome Guest!
                     <b style="color:yellow">Shopping Cart - </b>
-                    Total Items: <?php getTotalItems(); ?> Total Price: 
+                    Total Items: <?php getTotalItems(); ?> Total Price: $ 
                         <?php getTotalPrice(); ?>
                     <a href="cart.php"> Go to Cart</a></span> 
                 </div>
-                <?php echo getUserIP();  ?>
                 <div id="products_box">
                     <?php getPro();?>
                     <?php getCatPro();?>

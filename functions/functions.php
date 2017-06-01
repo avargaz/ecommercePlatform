@@ -243,6 +243,11 @@ function getTotalItems(){
 
 function getTotalPrice(){
     global $conn;
+    $ip = getUserIP();
+    $sql= "SELECT SUM(c.qty * p.product_price) FROM cart c, products p WHERE c.p_id = p.product_id";
+    $res = mysqli_query($conn, $sql);
+    $row = $res->fetch_row();
+    echo $row[0];
     
 }
 
