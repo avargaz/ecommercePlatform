@@ -248,11 +248,41 @@ function getTotalPrice(){
     $res = mysqli_query($conn, $sql);
     $row = $res->fetch_row();
     echo $row[0];
-    
 }
 
 
+function getPriceCartPage(){
+    $total = 0;
+    global $conn;
+    $ip = getUserIP();
+    $sel_price = "SELECT * FROM cart WHERE ip_add='$ip'";
+    $run_price = mysqli_query($conn, $sel_price);
+    while($p_price = mysqli_fetch_array($run_price)){
+        $pro_id = $p_price['p_id'];
+        $pro_price = "SELECT * FROM products WHERE product_id='$pro_id'";
+        $run_pro_price = mysqli_query($conn, $pro_price);
+        while($pp_price = mysqli_fetch_array($run_pro_price)){
+            $product_price = array($pp_price['product_price']);
+            $product_title = $pp_price['product_title'];
+            $product_image = $pp_price['product_image'];
+            $single_price = $pp_price['product_price'];
+            
+            $values = array_sum($product_price);
+            $total += $values;
+            echo "<tr align='center'>
+        <td><input type='checkbox' name='remove[]'/></td>
+        <td>$product_title<br>
+        <img src='img/product-images/$product_image' width='60' height='60'</td>
+        <td><input type='text' size='4' name='qty' /></td>
+        <td>$ $single_price </td>
+                </tr>";
+        }
+    }
 
+echo "<tr align='center'>
+        <td align='right' colspan='4'>Subtotal: $$total</td>
+    </tr>";
+}
 
 
 
