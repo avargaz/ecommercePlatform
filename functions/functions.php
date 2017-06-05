@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 //stablishing connection to DB
 $conn = mysqli_connect("localhost","root","","ecommerce");
 
@@ -317,13 +318,28 @@ function updateCart(){
     if(isset($_POST['continue'])){
         echo "<script>window.open('index.php','_self')</script>";
     }
-    
+    /*
+    if(isset($_POST['update_cart'])){
+        $qty = $_POST['qty'];
+        $sql= "UPDATE cart SET qty = $qty";
+        $run_sql = mysqli_query($conn,$sql);
+        
+        $_SESSION['qty'] = $qty;
+        $total = $total * $qty;
+        
+    }*/
     
 }
 
 
 
-
+function getCheckoutContent(){
+    if(!isset($_SESSION['customer_email'])){
+        include("customer_login.php");
+    }else{
+        include("payment.php");
+    }
+}
 
 
 
