@@ -224,7 +224,7 @@ function cart(){
             echo "<script>window.open('index.php','_self') </script>";
             
         }else{
-            $insert = "INSERT INTO cart (p_id, ip_add,qty) VALUES ('$pro_id','$user_ip');";
+            $insert = "INSERT INTO cart (p_id, ip_add,qty) VALUES ('$pro_id','$user_ip',1);";
             $run_pro = mysqli_query($conn, $insert,1);
             echo "<script>window.open('index.php','_self') </script>";
         }
@@ -249,7 +249,14 @@ function getTotalPrice(){
     $row = $res->fetch_row();
     echo $row[0];
 }
-
+function returnTotalPrice(){
+    global $conn;
+    $ip = getUserIP();
+    $sql= "SELECT SUM(c.qty * p.product_price) FROM cart c, products p WHERE c.p_id = p.product_id";
+    $res = mysqli_query($conn, $sql);
+    $row = $res->fetch_row();
+    return $row[0];
+}
 
 function getPriceCartPage(){
     $total = 0;
@@ -260,7 +267,7 @@ function getPriceCartPage(){
     while($p_price = mysqli_fetch_array($run_price)){
         $pro_id = $p_price['p_id'];
         $pro_price = "SELECT * FROM products WHERE product_id='$pro_id'";
-        $run_pro_price = mysqli_query($conn, $pro_price);
+        $run_pro_price =    mysqli_query($conn, $pro_price);
         while($pp_price = mysqli_fetch_array($run_pro_price)){
             $product_price = array($pp_price['product_price']);
             $product_title = $pp_price['product_title'];
@@ -270,19 +277,53 @@ function getPriceCartPage(){
             $values = array_sum($product_price);
             $total += $values;
             echo "<tr align='center'>
-        <td><input type='checkbox' name='remove[]'/></td>
+        <td><input type='checkbox' name='remove[]' value='$pro_id'/></td>
         <td>$product_title<br>
         <img src='img/product-images/$product_image' width='60' height='60'</td>
         <td><input type='text' size='4' name='qty' /></td>
         <td>$ $single_price </td>
                 </tr>";
         }
+
     }
 
 echo "<tr align='center'>
-        <td align='right' colspan='4'>Subtotal: $$total</td>
+        <td align='right' colspan='4'>Subtotal:".returnTotalPrice()."</td>
     </tr>";
+echo "<tr>
+    <td><input type='submit' name='update_cart' value='Update Cart'/></td>
+    <td><input type='submit' name='continue' value='Continue Shopping'/></td>
+    <td> <button><a href='checkout.php' style='text-decoration:none; color:black;'>Checkout</a></button></td>
+</tr>";
 }
+
+
+
+function updateCart(){
+    global $conn;
+    $ip = getUserIP();
+    if(isset($_POST['update_cart'])){
+        
+        foreach($_POST['remove'] as $remove_id){
+            $delete_product = "DELETE FROM cart WHERE p_id = $remove_id  AND ip_add = '$ip';";
+            echo $delete_product;
+            $run_delete = mysqli_query($conn, $delete_product);
+            
+            if($run_delete){
+                echo "<script>window.open('cart.php','_self')</script>";
+            }
+        }
+    }
+    if(isset($_POST['continue'])){
+        echo "<script>window.open('index.php','_self')</script>";
+    }
+    
+    
+}
+
+
+
+
 
 
 

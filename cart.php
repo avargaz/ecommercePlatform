@@ -75,7 +75,8 @@ include ("functions/functions.php");
                                 <th>Total Price</th>
                             </tr>
                             
-                            <?php getPriceCartPage()?>
+                            <?php getPriceCartPage();?>
+                            <?php updateCart();?>
                         </table>
                     </form>
                 </div>
