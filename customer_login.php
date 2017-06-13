@@ -22,5 +22,5 @@
                 </tr>
             </table>
             
-            <h2 style="float:right; padding-right:20px;"><a href="customer_login.php" style="text-decoration:none;">New Register Here</a></h2>
+            <h2 style="float:right; padding-right:20px;"><a href="customer_register.php" style="text-decoration:none;">New Register Here</a></h2>
     </div>
