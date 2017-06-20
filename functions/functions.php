@@ -340,11 +340,4 @@ function getCheckoutContent(){
         include("payment.php");
     }
 }
-
-
-
-
-
-
-
 ?>
