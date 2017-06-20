@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 //stablishing connection to DB
 $conn = mysqli_connect("localhost","root","","ecommerce");
 

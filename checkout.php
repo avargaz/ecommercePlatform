@@ -1,5 +1,6 @@
 <!DOCTYPE>
 <?php
+session_start();
 include ("functions/functions.php");
 ?>
 <html>
@@ -67,7 +68,12 @@ include ("functions/functions.php");
                 </div>
                 <div id="products_box">
                     <?php 
-                        getCheckoutContent();
+                        if(!isset($_SESSION['customer_email'])){
+                            include("customer_login.php");
+                        }else{
+                            include("payment.php");
+                        }
+                        //getCheckoutContent();
                     ?>
                 </div>
                 

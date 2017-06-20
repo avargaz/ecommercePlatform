@@ -1,5 +1,6 @@
 <!DOCTYPE>
 <?php
+session_start();
 include ("functions/functions.php");
 
 ?>
@@ -148,22 +149,31 @@ include ("functions/functions.php");
         $c_city = $_POST['c_city'];
         $c_contact = $_POST['c_contact'];
         $c_address = $_POST['c_address'];
-    }
     
-    move_uploaded_file($c_image_tmp, "customer/customer_images/$c_image");
-    $insert_c = "INSERT INTO customers (customer_ip, customer_name, customer_email, customer_pass, customer_country, customer_city, customer_contact, customer_address, customer_image) VALUES  ('$ip','$c_name','$c_email','$c_pass','$c_country','$c_city','$c_contact','$c_address','$c_image')";
     
-    $run_c = mysqli_query($conn, $insert_c);
-    if($run_c){
-        echo "<script>alert('Registration Succesful!') </script>";
-    }else{
-        echo "<script>alert('ERROR: Registration NOT Succesful');</script>";
+        move_uploaded_file($c_image_tmp, "customer/customer_images/$c_image");
+        $insert_c = "INSERT INTO customers (customer_ip, customer_name, customer_email, customer_pass, customer_country, customer_city, customer_contact, customer_address, customer_image) VALUES  ('$ip','$c_name','$c_email','$c_pass','$c_country','$c_city','$c_contact','$c_address','$c_image')";
+
+        $run_c = mysqli_query($conn, $insert_c);
+
+        $sel_cart = "SELECT * FROM cart WHERE ip_add = '$ip'";
+        $run_cart = mysqli_query($conn, $sel_cart);
+        $check_cart = mysqli_num_rows($run_cart);
+
+        if($check_cart == 0){
+            $_SESSION['customer_email'] = $c_email;
+            echo "<script>alert('Account has been created successfully')</script>";
+            echo "<script>window.open('customer/my_account.php','_self')</script>";
+        }else{
+            $_SESSION['customer_email'] = $c_email;
+            echo "<script>alert('Account has been created successfully')</script>";
+            echo "<script>window.open('checkout.php','_self')</script>";
+        }
+
     }
+
+
+
 ?>
-
-
-
-
-
 
 
