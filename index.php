@@ -1,5 +1,6 @@
 <!DOCTYPE>
 <?php
+session_start();
 include ("functions/functions.php");
 ?>
 <html>
@@ -64,6 +65,13 @@ include ("functions/functions.php");
                     Total Items: <?php getTotalItems(); ?> Total Price: $ 
                         <?php getTotalPrice(); ?>
                     <a href="cart.php"> Go to Cart</a></span> 
+                    <?php
+                        if(!isset($_SESSION['customer_email'])){
+                            echo "<a href='checkout.php'>Login</a>";
+                        }else{
+                            echo "<a href='logout.php'>Logout</a>";
+                        }
+                    ?>
                 </div>
                 <div id="products_box">
                     <?php getPro();?>
